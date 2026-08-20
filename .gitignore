@@ -1,0 +1,35 @@
+# ---------------------------------------------------------------------------
+# Secrets — NEVER commit these.
+# This file is intentionally the FIRST commit in the repository.
+# ---------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+
+# Private keys / certificates (Enable Banking .pem lives here)
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+secrets/
+
+# ---------------------------------------------------------------------------
+# Personal financial data — never leaves the host.
+# ---------------------------------------------------------------------------
+data/
+backups/
+*.sqlite
+*.sqlite3
+*.db
+
+# Local-only overrides
+config/local*
+docker-compose.override.yml
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
