@@ -1,0 +1,49 @@
+# ---------------------------------------------------------------------------
+# openbank-home — Actual Budget, reachable through Tailscale Serve only.
+#
+# Copy .env.example to .env before running `docker compose up -d`.
+# This file intentionally contains no banking credentials or private keys.
+# ---------------------------------------------------------------------------
+
+services:
+  actual:
+    # Enable Banking is currently experimental. Actual's former `edge` tag was
+    # renamed to `nightly`; use the Alpine variant on low-powered devices.
+    image: actualbudget/actual-server:nightly-alpine
+    container_name: openbank-home-actual
+    restart: unless-stopped
+
+    # Bind only to loopback. Tailscale Serve terminates HTTPS and proxies to
+    # this port, so Actual is not directly exposed on the LAN or internet.
+    ports:
+      - "127.0.0.1:${ACTUAL_PORT:-5006}:5006"
+
+    environment:
+      ACTUAL_PORT: 5006
+      ACTUAL_HOSTNAME: "::"
+      ACTUAL_TRUSTED_PROXIES: ${ACTUAL_TRUSTED_PROXIES:-127.0.0.1/32,::1/128}
+      ACTUAL_UPLOAD_FILE_SYNC_SIZE_LIMIT_MB: ${ACTUAL_UPLOAD_FILE_SYNC_SIZE_LIMIT_MB:-20}
+      ACTUAL_UPLOAD_SYNC_ENCRYPTED_FILE_SYNC_SIZE_LIMIT_MB: ${ACTUAL_UPLOAD_SYNC_ENCRYPTED_FILE_SYNC_SIZE_LIMIT_MB:-50}
+      ACTUAL_UPLOAD_FILE_SIZE_LIMIT_MB: ${ACTUAL_UPLOAD_FILE_SIZE_LIMIT_MB:-20}
+      TZ: ${TZ:-Europe/Rome}
+
+    volumes:
+      # Contains server-files/account.sqlite and user-files/. Never commit it.
+      - ./data/actual:/data
+
+    healthcheck:
+      test: ["CMD-SHELL", "node src/scripts/health-check.js"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+# Tailscale is intentionally installed on the host rather than embedded in this
+# Compose project. This keeps its identity and state independent of containers,
+# and lets `tailscale serve` reach Actual on 127.0.0.1:${ACTUAL_PORT:-5006}.
