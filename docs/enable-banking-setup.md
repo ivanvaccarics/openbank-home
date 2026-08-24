@@ -2,13 +2,15 @@
 
 ## 1) Go / no-go check first
 
-Before creating anything, verify your target institutions are available in Enable Banking: <https://enablebanking.com/open-banking-apis>
+Before creating anything, verify every bank/account provider you plan to connect is
+available in Enable Banking: <https://enablebanking.com/open-banking-apis>
 
-- BPER
-- isybank / Intesa Sanpaolo
-- Revolut
+Check each required provider for:
 
-If any required institution is missing or unstable, stop here and reassess the stack.
+- Availability in your country and account type
+- Stable connection status for ongoing sync
+
+If any required provider is missing or unstable, stop here and reassess the stack.
 
 ## 2) Create the Production application
 

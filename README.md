@@ -6,9 +6,9 @@
 [![CI](https://github.com/ivanvaccarics/openbank-home/actions/workflows/ci.yml/badge.svg)](https://github.com/ivanvaccarics/openbank-home/actions/workflows/ci.yml)
 [![Self-hosted](https://img.shields.io/badge/self--hosted-yes-blue)](https://actualbudget.org)
 
-Automatically pulls transactions from European banks — this setup is tested against
-**BPER**, **isybank** (Intesa Sanpaolo) and **Revolut** — into a local Actual Budget
-instance you can browse, edit, categorise and export from your phone.
+Automatically pulls transactions from supported European banks through PSD2/Open
+Banking into a local Actual Budget instance you can browse, edit, categorise and
+export from your phone.
 
 ---
 
@@ -50,7 +50,7 @@ instance you can browse, edit, categorise and export from your phone.
                       │
         ┌─────────────┼─────────────┐
         ▼             ▼             ▼
-      BPER        isybank        Revolut
+    Bank A      Bank B      Bank C
 ```
 
 **Key property:** the Pi only makes *outbound* connections to Enable Banking.
@@ -70,7 +70,7 @@ your data.
 |---|---|---|---|
 | Free tier for personal use | ✅ Yes, non-commercial | ⚠️ Increasingly restricted | ❌ Commercial only |
 | European bank coverage | ~2,700 institutions | Large | Large |
-| Italian coverage (BPER, isybank) | Good | Variable | Good |
+| Coverage for supported banks | Good | Variable | Good |
 | Native Actual Budget support | ✅ Yes (experimental) | ✅ Yes | ❌ No |
 | Auth model | Private key (`.pem`) | Client ID + secret | OAuth / commercial |
 
@@ -161,4 +161,4 @@ Details and workarounds in [docs/architecture.md](docs/architecture.md) and
 
 [MIT](LICENSE) © ivanvaccarics
 
-Not affiliated with Actual Budget, Enable Banking, Tailscale, or any bank mentioned.
+Not affiliated with Actual Budget, Enable Banking, Tailscale, or any financial institution.
