@@ -2,7 +2,7 @@
 
 ## 1) Go / no-go check first
 
-Before creating anything, verify your target institutions are available in Enable Banking: <https://enablebanking.com/open-banking-apis?country=IT>
+Before creating anything, verify your target institutions are available in Enable Banking: <https://enablebanking.com/open-banking-apis>
 
 - BPER
 - isybank / Intesa Sanpaolo
