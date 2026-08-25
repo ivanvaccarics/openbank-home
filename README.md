@@ -99,10 +99,10 @@ cd openbank-home
 cp .env.example .env
 $EDITOR .env
 
-# 2. Place your Enable Banking private key and lock it down
-mkdir -p secrets
-cp ~/Downloads/your-key.pem secrets/enablebanking.pem
-chmod 400 secrets/enablebanking.pem      # never committed — see .gitignore
+# 2. Join Tailscale, retrieve the node's DNS name, and update .env
+tailscale up
+tailscale status --json
+$EDITOR .env
 
 # 3. Bring the stack up
 docker compose up -d
@@ -111,7 +111,9 @@ docker compose up -d
 ./scripts/tailscale-serve.sh
 ```
 
-Then open `https://<your-host>.<your-tailnet>.ts.net` from any device on the tailnet.
+Open `https://<your-host>.<your-tailnet>.ts.net` from a device on the tailnet.
+After verifying HTTPS, create the Enable Banking application with the callback
+URL, protect its private key, and configure Bank Sync in Actual.
 
 Full walkthrough: [docs/enable-banking-setup.md](docs/enable-banking-setup.md)
 and [docs/tailscale-setup.md](docs/tailscale-setup.md).
