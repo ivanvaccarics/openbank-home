@@ -140,6 +140,20 @@ and Production IDs and keys separate.
 
 For the documented Actual integration:
 
+- Privacy policy URL:
+   `https://github.com/ivanvaccarics/openbank-home/blob/main/PRIVACY.md`
+- Terms of service URL:
+   `https://github.com/ivanvaccarics/openbank-home/blob/main/TERMS.md`
+- Data protection email: a real address you monitor; it is intentionally not
+   stored in this public repository.
+
+Commit and push `PRIVACY.md` and `TERMS.md` to the public `main` branch before
+registering the application, then open both URLs in a private browser window to
+confirm that they are accessible without a GitHub or Tailscale login.
+
+These pages describe this private deployment. Do not substitute Enable
+Banking's own privacy notice or terms, which describe Enable Banking's service.
+
 1. In <https://enablebanking.com/cp/applications>, register another application.
 2. Choose **Production**.
 3. Enter the requested application, contact, privacy policy and terms details.

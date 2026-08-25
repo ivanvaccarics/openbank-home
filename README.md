@@ -22,6 +22,8 @@ export from your phone.
 | [docs/backup-restore.md](docs/backup-restore.md) | Cron backups, encryption, restore drill |
 | [docs/troubleshooting.md](docs/troubleshooting.md) | Consent expiry, rate limits, duplicates, cert issues |
 | [docs/alternatives.md](docs/alternatives.md) | Actual vs Firefly III, aggregator comparison, community bridges |
+| [PRIVACY.md](PRIVACY.md) | Privacy notice for the private Enable Banking deployment |
+| [TERMS.md](TERMS.md) | Terms of use for the private Enable Banking deployment |
 | [SECURITY.md](SECURITY.md) | Threat model and secret-handling rules |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | How to contribute |
 
