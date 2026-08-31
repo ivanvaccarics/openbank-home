@@ -76,10 +76,15 @@ needed, grant Docker access, then log out and back in:
 ```bash
 sudo usermod -aG docker pi
 sudo tailscale set --operator=pi
+sudo tailscale debug prefs | grep OperatorUser
 ```
 
 Replace `pi` in both commands with the account configured in the unit. Enable
 and test the service:
+
+The output should identify the same non-root user configured in the systemd
+unit (for example, `pi`). If it is missing or incorrect, rerun
+`sudo tailscale set --operator=pi`, replacing `pi` with your service account.
 
 ```bash
 sudo systemctl daemon-reload
