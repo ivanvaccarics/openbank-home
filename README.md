@@ -117,7 +117,8 @@ docker compose up -d
 
 Open `https://<your-host>.<your-tailnet>.ts.net` from a device on the tailnet.
 After verifying HTTPS, create the Enable Banking application with the callback
-URL, protect its private key, and configure Bank Sync in Actual.
+URL, protect its private key, enable the experimental Enable Banking feature in
+Actual, and configure Bank Sync.
 
 Full walkthrough: [docs/enable-banking-setup.md](docs/enable-banking-setup.md)
 and [docs/tailscale-setup.md](docs/tailscale-setup.md).
