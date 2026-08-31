@@ -82,7 +82,9 @@ See [docs/alternatives.md](docs/alternatives.md) for the full comparison.
 
 ## Prerequisites
 
-- A machine that stays on: Raspberry Pi 4/5, NAS, or mini PC (~5 W)
+- A machine that stays on: Raspberry Pi 4/5, NAS, or mini PC (~5 W). A Pi 3
+  Model B can work with constraints; see
+  [Pi 3 and automatic startup](docs/raspberry-pi-autostart.md).
 - **Docker** and **Docker Compose v2**
 - A free [Tailscale](https://tailscale.com) account
 - A free [Enable Banking](https://enablebanking.com) account
@@ -128,6 +130,7 @@ and [docs/tailscale-setup.md](docs/tailscale-setup.md).
 |---|---|
 | [`scripts/backup.sh`](scripts/backup.sh) | Snapshot the data volume, rotate old backups, optional `rclone` off-site |
 | [`scripts/restore.sh`](scripts/restore.sh) | Restore a snapshot, with confirmation prompt |
+| [`scripts/start.sh`](scripts/start.sh) | Start the stack and configure Tailscale Serve (manual or systemd) |
 | [`scripts/tailscale-serve.sh`](scripts/tailscale-serve.sh) | Publish Actual inside the tailnet over HTTPS |
 | [`scripts/check-consents.sh`](scripts/check-consents.sh) | Remind you before PSD2 consents expire (90 days) |
 
