@@ -29,6 +29,70 @@ Behavior:
 - Optionally encrypts with `BACKUP_GPG_RECIPIENT`
 - Optionally copies to `RCLONE_REMOTE`
 
+## Configure `BACKUP_GPG_RECIPIENT` in `.env`
+
+`BACKUP_GPG_RECIPIENT` identifies the **public GPG key** used to encrypt backup archives.
+
+- Recommended: full key fingerprint (least ambiguous)
+- Alternatives: Key ID or key email
+
+If `BACKUP_GPG_RECIPIENT=` is left empty, encryption is disabled and backups are kept as `.tar.gz`.
+
+If `BACKUP_GPG_RECIPIENT` is set, `scripts/backup.sh` writes `.tar.gz.gpg` and removes the unencrypted `.tar.gz`.
+
+### 1) Install GnuPG (Debian / Raspberry Pi OS)
+
+```bash
+sudo apt update
+sudo apt install -y gnupg
+```
+
+### 2) Generate a key (run as the same user that runs backups)
+
+```bash
+gpg --full-generate-key
+```
+
+Do **not** run `gpg` with `sudo`: keys must live in the GPG keyring of the user running `scripts/backup.sh` (including cron jobs).
+
+### 3) List keys and fingerprint
+
+```bash
+gpg --list-keys
+gpg --list-keys --fingerprint
+```
+
+### 4) Set `BACKUP_GPG_RECIPIENT` in `.env`
+
+```bash
+# Preferred: full fingerprint
+BACKUP_GPG_RECIPIENT=1234567890ABCDEF1234567890ABCDEF12345678
+
+# Alternatives:
+# BACKUP_GPG_RECIPIENT=90ABCDEF12345678
+# BACKUP_GPG_RECIPIENT=your-email@example.com
+```
+
+### 5) Verify encryption by running a backup
+
+```bash
+./scripts/backup.sh
+ls -1 backups/actual-daily-*.tar.gz*
+```
+
+Expected result:
+
+- With `BACKUP_GPG_RECIPIENT` set: latest backup ends with `.tar.gz.gpg`
+- With `BACKUP_GPG_RECIPIENT=` empty: latest backup ends with `.tar.gz`
+
+If `docker compose` requires elevated privileges on your system, do not run `sudo ./scripts/backup.sh` (that would switch user and GPG keyring). Instead, run backups as a user that can use Docker directly (for example by adding the user to the `docker` group):
+
+```bash
+sudo usermod -aG docker "$USER"
+```
+
+Log out/in (or reboot) before retrying.
+
 ## Cron example
 
 Run daily at 03:30:
@@ -49,10 +113,24 @@ or encrypted:
 ./scripts/restore.sh /absolute/path/to/backup-file.tar.gz.gpg
 ```
 
+`scripts/restore.sh` handles `.gpg` backups automatically and decrypts before extracting.
+
+Manual decryption example:
+
+```bash
+gpg --decrypt --output /tmp/backup-file.tar.gz /absolute/path/to/backup-file.tar.gz.gpg
+```
+
 Safety controls:
 
 - Explicit `RESTORE` confirmation
 - Existing `data/actual` is preserved as `data/actual.pre-restore-<timestamp>`
+
+## Key custody and recovery risk
+
+Keep the GPG private key and its passphrase in a secure place, with at least one offline copy stored separately from the Raspberry Pi.
+
+If the private key or passphrase is lost, encrypted backups are not recoverable.
 
 ## Restore drill (recommended)
 
