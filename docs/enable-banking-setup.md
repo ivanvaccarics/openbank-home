@@ -201,14 +201,29 @@ Actual's Bank Sync setup in the next step.
 From a device connected to the tailnet, open `https://<TS_HOSTNAME>` and:
 
 1. Open your budget.
-2. Go to **More → Bank Sync**.
-3. Choose **Set up Enable Banking**.
-4. Paste the Production application ID.
-5. Upload the matching Production `.pem` file.
-6. Save the provider configuration.
+2. Go to **Settings → Experimental features**.
+3. If needed, click **I understand the risks, show experimental features**.
+4. Enable **Enable Banking sync (EU banks)**.
+5. Go to **More → Bank Sync**.
+6. Choose **Set up Enable Banking**.
+7. Paste the Production application ID.
+8. Upload the matching Production `.pem` file.
+9. Save the provider configuration.
 
 If Actual rejects the credentials, first confirm that the application ID and
 private key come from the same Production application.
+
+If the experimental toggle or Enable Banking connector is missing:
+
+- Confirm the running Compose image is `actualbudget/actual-server:nightly-alpine`.
+- Explicitly update and recreate the service:
+
+  ```bash
+  docker compose pull actual
+  docker compose up -d --force-recreate actual
+  ```
+
+- Close and reopen Actual, or run a hard refresh, to avoid stale browser assets.
 
 ## 10) Link an account and run the first sync
 
